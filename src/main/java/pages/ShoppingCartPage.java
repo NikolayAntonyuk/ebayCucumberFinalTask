@@ -12,8 +12,7 @@ public class ShoppingCartPage extends BasePage {
     @FindBy(xpath = "//button[@class='checkout-order-summary__continue-btn']")
     private WebElement checkoutButton;
 
-    @FindBy(xpath = "//div[contains(@class, 'shopping-cart-item--shopping-cart-your-order')]|//section[@data-code or @data-product-code]")
-    private WebElement shoppingCartItem;
+
 
     public ShoppingCartPage(WebDriver driver) {
         super(driver);
@@ -31,8 +30,6 @@ public class ShoppingCartPage extends BasePage {
         checkoutButton.click();
     }
 
-    public WebElement getShoppingCartItem() {
-        return shoppingCartItem;
-    }
+
 
 }

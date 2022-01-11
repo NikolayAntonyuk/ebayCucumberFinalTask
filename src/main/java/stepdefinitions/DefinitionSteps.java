@@ -9,11 +9,7 @@ import io.cucumber.java.en.When;
 import manager.PageFactoryManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import pages.CheckoutPage;
-import pages.HomePage;
-import pages.ProductPage;
-import pages.SearchResultsPage;
-import pages.ShoppingCartPage;
+import pages.*;
 
 import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
 import static java.lang.Thread.sleep;
@@ -22,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 
 public class DefinitionSteps {
 
-    private static final long DEFAULT_TIMEOUT = 60;
+    private static final long DEFAULT_TIMEOUT = 5000;
 
     WebDriver driver;
     HomePage homePage;
@@ -31,6 +27,9 @@ public class DefinitionSteps {
     ProductPage productPage;
     CheckoutPage checkoutPage;
     PageFactoryManager pageFactoryManager;
+    SignInPage singInPage;
+    SignUpPage signUpPage;
+    ReviewPage reviewPage;
 
     @Before
     public void testsSetUp() {
@@ -69,10 +68,7 @@ public class DefinitionSteps {
         homePage.isCartIconVisible();
     }
 
-    @And("User checks that language switcher is {string}")
-    public void checkLanguage(final String language) {
-        assertTrue(homePage.getLanguageButtonText().equalsIgnoreCase(language));
-    }
+
 
     @And("User checks register button visibility")
     public void checkRegisterButtonVisibility() {
@@ -91,15 +87,12 @@ public class DefinitionSteps {
 
     @Then("User checks email and password fields visibility on sign in popup")
     public void checkEmailVisibility() {
-        homePage.waitVisibilityOfElement(DEFAULT_TIMEOUT, homePage.getSignInPopup());
-        assertTrue(homePage.isEmailFieldVisible());
-        assertTrue(homePage.isPasswordFieldVisible());
+
+        assertTrue(singInPage.isUsernameVisible());
+
     }
 
-    @And("User closes sign in popup")
-    public void closeSignInPopup() {
-        homePage.clickSignInPopupCloseButton();
-    }
+
 
     @And("User opens store popup")
     public void openStorePopup() {
@@ -154,8 +147,11 @@ public class DefinitionSteps {
     @And("User clicks 'Add to Cart' button on product")
     public void clickAddToCart() {
         productPage = pageFactoryManager.getProductPage();
-        productPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
-        productPage.waitForAjaxToCompletePdp(DEFAULT_TIMEOUT);
+        productPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, productPage.getAddToCartButton());
+        productPage.clickDropDownColor();
+        productPage.clickSetColor();
+        productPage.clickDropDownStorageCapacity();
+        productPage.clickSetStorageCapacity();
         productPage.clickAddToCartButton();
     }
 
@@ -172,7 +168,7 @@ public class DefinitionSteps {
 
     @And("User checks 'Continue to Cart' button visibility")
     public void checkContinueToCartButtonVisibility() {
-        productPage.isContinueToCartButtonVisible();
+        productPage.isSignInButtonVisible();
     }
 
     @And("User checks that add to cart popup header is {string}")
@@ -182,13 +178,13 @@ public class DefinitionSteps {
 
     @And("User clicks 'Continue to Cart' button")
     public void clickContinueToCartButton() {
-        productPage.clickContinueToCartButton();
+        productPage.clickSignInButton();
     }
 
     @And("User clicks 'Checkout' button")
     public void clickCheckoutButton() {
         shoppingCartPage = pageFactoryManager.getShoppingCartPage();
-        shoppingCartPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, shoppingCartPage.getShoppingCartItem());
+        shoppingCartPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, shoppingCartPage.getShoppingCartTitle());
         shoppingCartPage.clickCheckoutButton();
     }
 
@@ -220,19 +216,60 @@ public class DefinitionSteps {
         searchResultsPage = pageFactoryManager.getSearchResultsPage();
         searchResultsPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         searchResultsPage.clickWishListOnFirstProduct();
+        searchResultsPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        searchResultsPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
+        searchResultsPage.nextWindow();
+
+
+
     }
+
+
 
     @And("User checks that amount of products in wish list are {string}")
     public void checkAmountOfProductsInWishList(final String expectedAmount) {
+        productPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        productPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
+        productPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, homePage.getShoppingCartCount());
+        assertEquals(homePage.getAmountOfShoppingCart(), expectedAmount);
+    }
+
+
+
+    @And("User checks language visibility")
+    public void userChecksLanguageVisibility() {
+        homePage.clickLanguageShipToButton();
         homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
-        homePage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
-        homePage.waitVisibilityOfElement(DEFAULT_TIMEOUT, homePage.getWishListProductsCount());
-        assertEquals(homePage.getAmountOfProductsInWishList(), expectedAmount);
+        homePage.waitVisibilityOfElement(DEFAULT_TIMEOUT, homePage.getLanguagePopUpSet());
+        homePage.isLanguagePopUpSetVisible();
+        homePage.clickLanguageDropDown();
+
+
+
+    }
+
+
+
+
+
+    @And("User clicks language Country")
+    public void userClicksLanguageCountry() {
+        homePage.clickCountry();
+        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        homePage.waitVisibilityOfElement(DEFAULT_TIMEOUT, homePage.isLanguageIconVisible());
+        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        homePage.waitVisibilityOfElement(DEFAULT_TIMEOUT, homePage.getLanguageSelected());
+        homePage.clickLanguagePopUpDone();
+    }
+
+    @And("User checks selected language")
+    public void userChecksSelectedLanguage() {
+        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        homePage.waitVisibilityOfElement(DEFAULT_TIMEOUT, homePage.isLanguageIconVisible());
     }
 
     @After
     public void tearDown() {
-        driver.close();
+        driver.quit();
     }
-
 }

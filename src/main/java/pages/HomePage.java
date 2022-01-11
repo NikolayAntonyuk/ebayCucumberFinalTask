@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 public class HomePage extends BasePage {
 
     @FindBy(xpath = "//body[@class='desktop gh-flex']")
@@ -15,8 +17,31 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//li[@id='gh-eb-My']//a[@class='gh-eb-li-a gh-rvi-menu']")
     private WebElement cartIcon;
 
+    @FindBy(xpath = "//button[@title='Ship to']")
+    private WebElement languageShipToButton;
+
+    @FindBy(xpath = "//h3[@class='shipto__title']")
+    private WebElement languagePopUpSet;
+
+    @FindBy(xpath = "//div[@class='menu-button__item']")
+    private List<WebElement> languagesCountry;
+
+    @FindBy(xpath = "//span[@class='expand-btn__cell menu-button__control--custom-label']")
+    private WebElement languageDropDown;
+
+    @FindBy(xpath = "//div[@class='flag-wrapper']")
+    private WebElement languageSelected;
+
+
+    @FindBy(xpath = "//button[@class='shipto__close-btn']")
+    private WebElement languagePopUpDone;
+
     @FindBy(xpath = "//i[@class='flgspr gh-flag-bg flaua']")
-    private WebElement languageButton;
+    private WebElement languageIcon;
+
+
+
+
 
     @FindBy(xpath = "//span[@id='gh-ug']/a[text()='Sign in']")
     private WebElement signInButton;
@@ -41,7 +66,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//a[@class='gh-eb-li-a gh-rvi-menu watchlist-menu']")
     private WebElement wishListProductsCount;
 
-    @FindBy(xpath = "//li[@id='gh-minicart-hover']//a[@class='gh-eb-li-a gh-rvi-menu']")
+    @FindBy(xpath = "//li[@id='gh-minicart-hover']//i[@id='gh-cart-n']")
     private WebElement shoppingCart;
 
 
@@ -65,9 +90,31 @@ public class HomePage extends BasePage {
         cartIcon.isDisplayed();
     }
 
-    public String getLanguageButtonText() {
-        return languageButton.getText();
+     public String getLanguageButtonText() {
+        return languagePopUpSet.getText();
     }
+
+    public void clickLanguageShipToButton() {
+        languageShipToButton.click();
+    }
+
+    public void clickLanguageDropDown() {
+        languageDropDown.click();
+    }
+
+
+
+    public void clickCountry() {
+        languagesCountry.get(196).click();
+    }
+
+    public void clickLanguagePopUpDone() {
+        languagePopUpDone.click();
+    }
+
+
+
+
 
     public void isSignInButtonVisible() {
         signInButton.isDisplayed();
@@ -79,6 +126,23 @@ public class HomePage extends BasePage {
 
     public void isRegisterButtonVisible() {
         registerButton.isDisplayed();
+    }
+
+    public void isLanguagePopUpSetVisible() {
+        languagePopUpSet.isDisplayed();
+    }
+
+    public WebElement getLanguagePopUpSet() {
+        return languagePopUpSet;
+    }
+
+    public WebElement getLanguageSelected() {
+        return languageSelected;
+    }
+
+
+    public WebElement isLanguageIconVisible() {
+        return languageIcon;
     }
 
 
@@ -102,7 +166,7 @@ public class HomePage extends BasePage {
     }
 
     public void clickLanguageButton() {
-        languageButton.click();
+        languageShipToButton.click();
     }
 
     public void enterTextToSearchField(final String searchText) {

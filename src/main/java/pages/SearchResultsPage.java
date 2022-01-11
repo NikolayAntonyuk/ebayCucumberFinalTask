@@ -8,7 +8,7 @@ import java.util.List;
 
 public class SearchResultsPage extends BasePage {
 
-    @FindBy(xpath = "//button[contains(@class, 'heart-icon')]")
+    @FindBy(xpath = "//h3[@class='s-item__title']")
     private List<WebElement> wishListIcons;
 
     public SearchResultsPage(WebDriver driver) {
@@ -17,6 +17,15 @@ public class SearchResultsPage extends BasePage {
 
     public void clickWishListOnFirstProduct() {
         wishListIcons.get(0).click();
+    }
+
+    public void nextWindow() {
+        String winHandleBefore = driver.getWindowHandle();
+        for(String winHandle : driver.getWindowHandles()){
+            driver.switchTo().window(winHandle);
+        }
+         driver.switchTo().window(driver.getWindowHandle());
+         //driver.close();
     }
 
 }

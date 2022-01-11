@@ -1,6 +1,5 @@
 package pages;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,13 +27,40 @@ public class ProductPage extends BasePage {
     @FindBy(xpath = "//input[@class='qtyInput']")
     private WebElement inputQuantity;
 
+    @FindBy(xpath = "//span[@itemprop='price']")
+    private WebElement valuePrice;
+
+    @FindBy(xpath = "//span[@class='ux-layout-section-module__title']/span[text()='About this product']")
+    private WebElement textAboutThisProduct;
+
+    @FindBy(xpath = "//div[@class='reviews-left']//h2[@class='mg f17 left']")
+    private WebElement textRatingsAndReviews;
+
+    @FindBy(xpath = "//a[@class='btn btn-ter right']")
+    private WebElement buttonWriteReviews;
+
+    @FindBy(xpath = "//select[@name='Color']")
+    private WebElement dropDownColor;
+
+    @FindBy(xpath = "//select[@name='Color']/option[@id='msku-opt-0']")
+    private WebElement setColor;
+
+    @FindBy(xpath = "//select[@name='Storage Capacity']")
+    private WebElement dropDownStorageCapacity;
+
+    @FindBy(xpath = "//select[@name='Storage Capacity']/option[@id='msku-opt-4']")
+    private WebElement setStorageCapacity;
+
+
+
+
 
     public ProductPage(WebDriver driver) {
         super(driver);
     }
 
     public void clickAddToCartButton() {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", addToCartButton);
+        addToCartButton.click();
     }
 
     public boolean isAddToCartPopupVisible() {
@@ -53,25 +79,74 @@ public class ProductPage extends BasePage {
         return addBuyNowPopupHeader.getText();
     }
 
-    public void isContinueToCartButtonVisible() {
-        continueToCartButton.isDisplayed();
+    public void isSignInButtonVisible() {
+        signInButton.isDisplayed();
     }
 
-    public void clickContinueToCartButton() {
-        continueToCartButton.click();
+    public void clickSignInButton() {
+        signInButton.click();
     }
+
+    public void isAsGuestButtonVisible() {
+        asGuestButton.isDisplayed();
+    }
+
+    public void clickAsGuestButtonButton() {
+        asGuestButton.click();
+    }
+
 
     public void clickBuyItNowButtonButton() {
         buyItNowButton.click();
     }
 
+    public void clickDropDownColor() {
+        dropDownColor.click();
+    }
+
+    public void clickSetColor() {
+        setColor.click();
+    }
+
+    public void clickDropDownStorageCapacity() {
+        dropDownStorageCapacity.click();
+    }
+
+
+
+    public void clickSetStorageCapacity() {
+        setStorageCapacity.click();
+    }
+
+
+
+
+
+
+
+
+
+
     public WebElement getAddBuyNowPopupHeader() {
         return addBuyNowPopupHeader;
     }
 
+    public WebElement getAddToCartButton() {
+        return addToCartButton;
+    }
+
+
+
+
+
     public void enterTextToInputQuantityField(final String quantityText) {
         inputQuantity.clear();
         inputQuantity.sendKeys(quantityText);
+    }
+
+
+    public String getValuePriceText() {
+        return valuePrice.getText();
     }
 
 }

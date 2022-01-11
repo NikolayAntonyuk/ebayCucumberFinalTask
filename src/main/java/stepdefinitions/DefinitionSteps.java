@@ -9,11 +9,7 @@ import io.cucumber.java.en.When;
 import manager.PageFactoryManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import pages.CheckoutPage;
-import pages.HomePage;
-import pages.ProductPage;
-import pages.SearchResultsPage;
-import pages.ShoppingCartPage;
+import pages.*;
 
 import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
 import static java.lang.Thread.sleep;
@@ -31,6 +27,7 @@ public class DefinitionSteps {
     ProductPage productPage;
     CheckoutPage checkoutPage;
     PageFactoryManager pageFactoryManager;
+    SingInPage singInPage;
 
     @Before
     public void testsSetUp() {
@@ -91,14 +88,14 @@ public class DefinitionSteps {
 
     @Then("User checks email and password fields visibility on sign in popup")
     public void checkEmailVisibility() {
-        homePage.waitVisibilityOfElement(DEFAULT_TIMEOUT, homePage.getSignInPopup());
-        assertTrue(homePage.isEmailFieldVisible());
-        assertTrue(homePage.isPasswordFieldVisible());
+        homePage.waitVisibilityOfElement(DEFAULT_TIMEOUT, singInPage.getSignInPopup());
+        assertTrue(singInPage.isEmailFieldVisible());
+        assertTrue(singInPage.isPasswordFieldVisible());
     }
 
     @And("User closes sign in popup")
     public void closeSignInPopup() {
-        homePage.clickSignInPopupCloseButton();
+        singInPage.clickSignInPopupCloseButton();
     }
 
     @And("User opens store popup")
@@ -172,7 +169,7 @@ public class DefinitionSteps {
 
     @And("User checks 'Continue to Cart' button visibility")
     public void checkContinueToCartButtonVisibility() {
-        productPage.isContinueToCartButtonVisible();
+        productPage.isSignInButtonVisible();
     }
 
     @And("User checks that add to cart popup header is {string}")
@@ -182,7 +179,7 @@ public class DefinitionSteps {
 
     @And("User clicks 'Continue to Cart' button")
     public void clickContinueToCartButton() {
-        productPage.clickContinueToCartButton();
+        productPage.clickSignInButton();
     }
 
     @And("User clicks 'Checkout' button")

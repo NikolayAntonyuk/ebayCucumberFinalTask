@@ -53,13 +53,22 @@ public class ProductPage extends BasePage {
         return addBuyNowPopupHeader.getText();
     }
 
-    public void isContinueToCartButtonVisible() {
-        continueToCartButton.isDisplayed();
+    public void isSignInButtonVisible() {
+        signInButton.isDisplayed();
     }
 
-    public void clickContinueToCartButton() {
-        continueToCartButton.click();
+    public void clickSignInButton() {
+        signInButton.click();
     }
+
+    public void isAsGuestButtonVisible() {
+        asGuestButton.isDisplayed();
+    }
+
+    public void clickAsGuestButtonButton() {
+        asGuestButton.click();
+    }
+
 
     public void clickBuyItNowButtonButton() {
         buyItNowButton.click();

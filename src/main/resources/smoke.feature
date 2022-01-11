@@ -36,7 +36,7 @@ Feature: Smoke
 
     Examples:
       | homePage                            | languageSwitcher |
-      | https://www.canadiantire.ca/en.html | Français         |
+      | https://www.ebay.com                | Français         |
 
   Scenario Outline: Check add product to cart
     Given User opens '<homePage>' page
@@ -57,5 +57,5 @@ Feature: Smoke
 
     Examples:
       | homePage                            | keyword  | header                                |
-      | https://www.canadiantire.ca/en.html | 0830187p | You have added 1 item(s) to your cart |
+      | https://www.ebay.com                | 0830187p | You have added 1 item(s) to your cart |
 

@@ -13,8 +13,7 @@ import pages.*;
 
 import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
 import static java.lang.Thread.sleep;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class DefinitionSteps {
 
@@ -325,5 +324,40 @@ public class DefinitionSteps {
     public void userChecksThatAmountOfProductsInCartIsEmpty() {
         homePage.clickCartButton();
         assertTrue(shoppingCartPage.isYouDontHaveAnyItemsVisible());
+    }
+
+    @And("User clicks Add to Cart button on product validity")
+    public void userClicksAddToCartButtonOnProductValidity() {
+        productPage = pageFactoryManager.getProductPage();
+        productPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, productPage.getAddToCartButton());
+        productPage.clickAddToCartButton();
+
+    }
+
+    @Then("User checks without select Color")
+    public void userChecksWithoutSelectColor() {
+        assertTrue(productPage.isPleaseSelectColor());
+        productPage.clickDropDownColor();
+        productPage.clickSetColor();
+        productPage.clickAddToCartButton();
+        assertFalse(productPage.isPleaseSelectColor());
+    }
+
+    @And("User checks without select StorageCapacity")
+    public void userChecksWithoutSelectStorageCapacity() {
+        assertTrue(productPage.isPleaseSelectColorStorageCapacity());
+        productPage.clickDropDownStorageCapacity();
+        productPage.clickSetStorageCapacity();
+        assertFalse(productPage.isPleaseSelectColorStorageCapacity());
+    }
+
+
+    @And("User checks without select {string}")
+    public void userChecksWithoutSelectQuantity(final String expectedAmount) {
+        productPage.enterTextToInputQuantityField(expectedAmount);
+        assertTrue(productPage.isPleaseEnterQuantityOf1More());
+        productPage.enterTextToInputQuantityField("999");
+        assertTrue(productPage.isPurchasesAreLimited());
+        productPage.clickAddToCartButton();
     }
 }

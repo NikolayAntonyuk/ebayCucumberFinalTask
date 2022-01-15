@@ -54,6 +54,18 @@ public class ProductPage extends BasePage {
     @FindBy(xpath = "//div[@id='anchor-tc']")
     private WebElement pageCaptcha;
 
+    @FindBy(xpath = "//div[@class='u-cb err' and text()='Please select a Color']")
+    private WebElement pleaseSelectColor;
+
+    @FindBy(xpath = "//div[@class='u-cb err' and text()='Please select a Storage Capacity']")
+    private WebElement pleaseSelectColorStorageCapacity;
+
+    @FindBy(xpath = "//div[@class='u-cb err' and text()='Please enter quantity of 1 or more']")
+    private WebElement pleaseEnterQuantityOf1More;
+
+    @FindBy(xpath = "//div[@class='u-cb err' and contains(text(), 'Purchases are limited ')]")
+    private WebElement purchasesAreLimited;
+
 
 
 
@@ -63,6 +75,23 @@ public class ProductPage extends BasePage {
     }
 
 
+
+
+    public boolean isPurchasesAreLimited() {
+        return purchasesAreLimited.isDisplayed();
+    }
+
+    public boolean isPleaseEnterQuantityOf1More() {
+        return pleaseEnterQuantityOf1More.isDisplayed();
+    }
+
+    public boolean isPleaseSelectColorStorageCapacity() {
+        return pleaseSelectColorStorageCapacity.isDisplayed();
+    }
+
+    public boolean isPleaseSelectColor() {
+        return pleaseSelectColor.isDisplayed();
+    }
 
     public boolean isAddToCartPopupVisible() {
         return addBuyNowPopupHeader.isDisplayed();

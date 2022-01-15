@@ -19,13 +19,6 @@ public class SearchResultsPage extends BasePage {
         wishListIcons.get(0).click();
     }
 
-    public void nextWindow() {
-        String winHandleBefore = driver.getWindowHandle();
-        for(String winHandle : driver.getWindowHandles()){
-            driver.switchTo().window(winHandle);
-        }
-         driver.switchTo().window(driver.getWindowHandle());
-         //driver.close();
-    }
+
 
 }

@@ -18,7 +18,8 @@ import static org.junit.Assert.assertTrue;
 
 public class DefinitionSteps {
 
-    private static final long DEFAULT_TIMEOUT = 5000;
+    private static final long DEFAULT_TIMEOUT = 60;
+    private static final String EXPECTED_SEARCH_QUERY = "splashui/captcha?";
 
     WebDriver driver;
     HomePage homePage;
@@ -219,9 +220,6 @@ public class DefinitionSteps {
         searchResultsPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
         searchResultsPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
         searchResultsPage.nextWindow();
-
-
-
     }
 
 
@@ -271,5 +269,61 @@ public class DefinitionSteps {
     @After
     public void tearDown() {
         driver.quit();
+    }
+
+    @And("User checks home page field visibility")
+    public void userChecksHomePageFieldVisibility() {
+        homePage.isRegisterButtonVisible();
+        homePage.isSearchInputFieldVisible();
+    }
+
+    @And("User click button registration")
+    public void userClickButtonRegistration() {
+        homePage.clickSignInButton();
+    }
+
+    @And("User clicks Add button on product")
+    public void userClicksAddToFavoriteButtonOnProduct() {
+        productPage = pageFactoryManager.getProductPage();
+        productPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, productPage.getAddToCartButton());
+        productPage.clickDropDownColor();
+        productPage.clickSetColor();
+        productPage.clickDropDownStorageCapacity();
+        productPage.clickSetStorageCapacity();
+        productPage.clickAddToWatchlistButton();
+
+
+
+    }
+
+    @Then("User checks that lock captcha checking")
+    public void userChecksThatLockCaptchaChecking() {
+        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        assertTrue(driver.getCurrentUrl().contains(EXPECTED_SEARCH_QUERY));
+
+    }
+
+    @And("User clicks Cart Remove Item")
+    public void userClicksCartRemoveItem() {
+        shoppingCartPage = pageFactoryManager.getShoppingCartPage();
+        shoppingCartPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        shoppingCartPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
+        shoppingCartPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, shoppingCartPage.getCartRemoveItem());
+        shoppingCartPage.clickCartRemoveItem();
+    }
+
+    @And("User clicks Cart Item")
+    public void userClicksCartItem() {
+        homePage = pageFactoryManager.getHomePage();
+        homePage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
+        homePage.waitVisibilityOfElement(DEFAULT_TIMEOUT, homePage.getButtonStartShopping());
+        homePage.clickStartShopping();
+
+    }
+
+    @Then("User checks that amount of products in cart is empty")
+    public void userChecksThatAmountOfProductsInCartIsEmpty() {
+        homePage.clickCartButton();
+        assertTrue(shoppingCartPage.isYouDontHaveAnyItemsVisible());
     }
 }

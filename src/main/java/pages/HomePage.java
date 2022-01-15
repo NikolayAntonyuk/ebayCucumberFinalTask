@@ -14,7 +14,7 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//footer[@id='glbfooter']")
     private WebElement footer;
 
-    @FindBy(xpath = "//li[@id='gh-eb-My']//a[@class='gh-eb-li-a gh-rvi-menu']")
+    @FindBy(xpath = "//li[@id='gh-minicart-hover']//*[@class='gh-cart-icon']")
     private WebElement cartIcon;
 
     @FindBy(xpath = "//button[@title='Ship to']")
@@ -69,6 +69,11 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//li[@id='gh-minicart-hover']//i[@id='gh-cart-n']")
     private WebElement shoppingCart;
 
+    @FindBy(xpath = "//a[@data-test-id='start-shopping']")
+    private WebElement startShopping;
+
+
+
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -90,9 +95,7 @@ public class HomePage extends BasePage {
         cartIcon.isDisplayed();
     }
 
-     public String getLanguageButtonText() {
-        return languagePopUpSet.getText();
-    }
+
 
     public void clickLanguageShipToButton() {
         languageShipToButton.click();
@@ -102,8 +105,6 @@ public class HomePage extends BasePage {
         languageDropDown.click();
     }
 
-
-
     public void clickCountry() {
         languagesCountry.get(196).click();
     }
@@ -112,16 +113,41 @@ public class HomePage extends BasePage {
         languagePopUpDone.click();
     }
 
+    public void clickSignInButton() {
+        signInButton.click();
+    }
+
+    public void clickFreeYourselfButton() {
+        freeYourselfButton.click();
+    }
+
+    public void clickRegisterButtonButton() {
+        registerButton.click();
+    }
+
+    public void clickLanguageButton() {
+        languageShipToButton.click();
+    }
+
+    public void clickCartButton() {
+        cartIcon.click();
+    }
+
+    public void clickSearchButton() {
+        searchButton.click();
+    }
+
+    public void clickStartShopping() {
+        startShopping.click();
+    }
+
+
 
 
 
 
     public void isSignInButtonVisible() {
         signInButton.isDisplayed();
-    }
-
-    public void clickSignInButton() {
-        signInButton.click();
     }
 
     public void isRegisterButtonVisible() {
@@ -132,27 +158,6 @@ public class HomePage extends BasePage {
         languagePopUpSet.isDisplayed();
     }
 
-    public WebElement getLanguagePopUpSet() {
-        return languagePopUpSet;
-    }
-
-    public WebElement getLanguageSelected() {
-        return languageSelected;
-    }
-
-
-    public WebElement isLanguageIconVisible() {
-        return languageIcon;
-    }
-
-
-
-
-
-    public void clickFreeYourselfButton() {
-        freeYourselfButton.click();
-    }
-
     public boolean isFreeYourselfPopupVisible() {
         return freeYourselfPopup.isDisplayed();
     }
@@ -161,25 +166,32 @@ public class HomePage extends BasePage {
         searchInputField.isDisplayed();
     }
 
-    public void clickCartButton() {
-        cartIcon.click();
+
+
+    public WebElement getLanguagePopUpSet() {
+        return languagePopUpSet;
     }
 
-    public void clickLanguageButton() {
-        languageShipToButton.click();
+    public WebElement getLanguageSelected() {
+        return languageSelected;
     }
+
+    public WebElement isLanguageIconVisible() {
+        return languageIcon;
+    }
+
 
     public void enterTextToSearchField(final String searchText) {
         searchInputField.clear();
         searchInputField.sendKeys(searchText);
     }
 
-    public void clickSearchButton() {
-        searchButton.click();
-    }
-
     public WebElement getWishListProductsCount() {
         return wishListProductsCount;
+    }
+
+    public WebElement getButtonStartShopping() {
+        return startShopping;
     }
 
     public String getAmountOfProductsInWishList() {

@@ -12,6 +12,12 @@ public class ShoppingCartPage extends BasePage {
     @FindBy(xpath = "//button[@class='checkout-order-summary__continue-btn']")
     private WebElement checkoutButton;
 
+    @FindBy(xpath = "//button[@data-test-id='cart-remove-item']")
+    private WebElement cartRemoveItem;
+
+    @FindBy(xpath = "//div[@class='font-title-3']")
+    private WebElement youDontHaveAnyItems;
+
 
 
     public ShoppingCartPage(WebDriver driver) {
@@ -26,10 +32,28 @@ public class ShoppingCartPage extends BasePage {
         return shoppingCartTitle.isDisplayed();
     }
 
+    public boolean isYouDontHaveAnyItemsVisible() {
+        return youDontHaveAnyItems.isDisplayed();
+    }
+
+
+
+
+
+
     public void clickCheckoutButton() {
         checkoutButton.click();
     }
 
+    public void clickCartRemoveItem() {
+        cartRemoveItem.click();
+    }
+
+
+
+    public WebElement getCartRemoveItem() {
+        return cartRemoveItem;
+    }
 
 
 }

@@ -63,7 +63,9 @@ public class SignUpPage extends BasePage{
     private WebElement buttonCreateAccount;
 
 
-
+    public void openHomePage(String url) {
+        driver.get(url);
+    }
 
 
 

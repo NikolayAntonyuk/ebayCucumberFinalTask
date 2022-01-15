@@ -51,6 +51,9 @@ public class ProductPage extends BasePage {
     @FindBy(xpath = "//select[@name='Storage Capacity']/option[@id='msku-opt-4']")
     private WebElement setStorageCapacity;
 
+    @FindBy(xpath = "//div[@id='anchor-tc']")
+    private WebElement pageCaptcha;
+
 
 
 
@@ -59,9 +62,7 @@ public class ProductPage extends BasePage {
         super(driver);
     }
 
-    public void clickAddToCartButton() {
-        addToCartButton.click();
-    }
+
 
     public boolean isAddToCartPopupVisible() {
         return addBuyNowPopupHeader.isDisplayed();
@@ -83,15 +84,27 @@ public class ProductPage extends BasePage {
         signInButton.isDisplayed();
     }
 
-    public void clickSignInButton() {
-        signInButton.click();
-    }
-
     public void isAsGuestButtonVisible() {
         asGuestButton.isDisplayed();
     }
 
-    public void clickAsGuestButtonButton() {
+    public void isPageCaptchaVisible() {
+        pageCaptcha.isDisplayed();
+    }
+
+
+
+    public void clickAddToCartButton() {
+        addToCartButton.click();
+    }
+
+    public void clickSignInButton() {
+        signInButton.click();
+    }
+
+
+
+    public void clickAsGuestButton() {
         asGuestButton.click();
     }
 
@@ -112,13 +125,13 @@ public class ProductPage extends BasePage {
         dropDownStorageCapacity.click();
     }
 
-
-
     public void clickSetStorageCapacity() {
         setStorageCapacity.click();
     }
 
-
+    public void clickAddToWatchlistButton() {
+        addToWatchlistButton.click();
+    }
 
 
 
@@ -133,6 +146,10 @@ public class ProductPage extends BasePage {
 
     public WebElement getAddToCartButton() {
         return addToCartButton;
+    }
+
+    public WebElement getPageCaptcha() {
+        return pageCaptcha;
     }
 
 

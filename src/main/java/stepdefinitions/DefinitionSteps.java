@@ -19,6 +19,11 @@ public class DefinitionSteps {
 
     private static final long DEFAULT_TIMEOUT = 60;
     private static final String EXPECTED_SEARCH_QUERY = "splashui/captcha?";
+    private static final String EXPECTED_URL_EBAY = "https://www.ebay.com/";
+    private static final String EXPECTED_URL_BLOGS = "https://www.ebayinc.com/";
+    private static final String EXPECTED_URL_FACEBOOK = "https://www.facebook.com/ebay/";
+    private static final String EXPECTED_URL_TWITTER = "https://twitter.com/eBay";
+
 
     WebDriver driver;
     HomePage homePage;
@@ -29,7 +34,7 @@ public class DefinitionSteps {
     PageFactoryManager pageFactoryManager;
     SignInPage singInPage;
     SignUpPage signUpPage;
-    ReviewPage reviewPage;
+    FiltersPage filtersPage;
 
     @Before
     public void testsSetUp() {
@@ -80,17 +85,7 @@ public class DefinitionSteps {
         homePage.isSignInButtonVisible();
     }
 
-    @When("User clicks 'Sign In' button")
-    public void clickSignInButton() {
-        homePage.clickSignInButton();
-    }
 
-    @Then("User checks email and password fields visibility on sign in popup")
-    public void checkEmailVisibility() {
-
-        assertTrue(singInPage.isUsernameVisible());
-
-    }
 
 
 
@@ -359,5 +354,170 @@ public class DefinitionSteps {
         productPage.enterTextToInputQuantityField("999");
         assertTrue(productPage.isPurchasesAreLimited());
         productPage.clickAddToCartButton();
+    }
+
+    @And("User click on 'Free yourself' button")
+    public void userClickOnFreeYourselfButton() {
+        homePage.isFreeYourselfPopupVisible();
+        homePage.clickFreeYourselfButton();
+        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+
+    }
+
+    @When("User click on 'More refinements...'")
+    public void userClickOnMoreRefinements() {
+        homePage.clickMoreRefinements();
+        filtersPage = pageFactoryManager.getFiltersPage();
+        filtersPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, filtersPage.getFilterSelected());
+        assertTrue(filtersPage.isFilterSelectedVisible());
+
+    }
+
+    @And("User clicks on checkbox filter {string}")
+    public void userClicksOnCheckboxFilter(final String expectedAmount) {
+        filtersPage.clickConditionCheckBoxNew();
+        filtersPage.clickConditionCheckBoxUsed();
+        filtersPage.clickConditionCheckBoxNotSpecified();
+        filtersPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
+        assertEquals(filtersPage.getAmountOfFiltersCount(), expectedAmount);
+    }
+
+    @And("User clicks 'Apply Filter' button")
+    public void userClicksApplyFilterButton() {
+        filtersPage.clickButtonApplyFilter();
+    }
+
+    @Then("User checks selected filters")
+    public void userChecksSelectedFilters() {
+        filtersPage.waitForAjaxToComplete(DEFAULT_TIMEOUT);
+        filtersPage.waitVisibilityOfElement(DEFAULT_TIMEOUT, filtersPage.getCheckBoxNotSpecified());
+
+    }
+
+
+    @When("User click on input Price button {string} value")
+    public void userClickOnInputPriceButtonPriceValue(final String Price) {
+        filtersPage = pageFactoryManager.getFiltersPage();
+        filtersPage.enterMinimumValueField(Price);
+        filtersPage.enterMaximumValueField(Price);
+        filtersPage.clickButtonSubmitPrice();
+    }
+
+    @Then("User checks selected Price filters")
+    public void userChecksSelectedPriceFilters() {
+        filtersPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        assertTrue(filtersPage.isInfoNoMatchingItemsFound());
+
+
+    }
+
+    @And("User click on Clear Filters")
+    public void userClickOnClearFilters() {
+        filtersPage.clickButtonClearFilters();
+        filtersPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        assertTrue(filtersPage.isCountResultsText());
+
+
+    }
+
+    @When("User click on input eBay's Blogs")
+    public void userClickOnInputEBaySBlogs() {
+        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        homePage.clickButtonBlogs();
+        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        assertTrue(driver.getCurrentUrl().contains(EXPECTED_URL_BLOGS));
+        driver.navigate().back();
+    }
+
+    @And("User click on input Facebook")
+    public void userClickOnInputFacebook() {
+        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        homePage.clickButtonFacebook();
+        homePage.waitVisibilityOfElement(DEFAULT_TIMEOUT, homePage.getIconFacebook());
+        assertTrue(driver.getCurrentUrl().contains(EXPECTED_URL_FACEBOOK));
+        driver.navigate().back();
+    }
+
+    @And("User click on input Twitter")
+    public void userClickOnInputTwitter() {
+        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        homePage.clickButtonTwitter();
+        homePage.waitVisibilityOfElement(DEFAULT_TIMEOUT, homePage.getIconTwitter());
+        assertTrue(driver.getCurrentUrl().contains(EXPECTED_URL_TWITTER));
+        driver.navigate().back();
+
+
+    }
+
+    @Then("User checks going to page mine")
+    public void userChecksGoingToPageMine() {
+        homePage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        assertTrue(driver.getCurrentUrl().contains(EXPECTED_URL_EBAY));
+
+    }
+
+    @And("User click on Advanced search")
+    public void userClickOnAdvancedSearch() {
+        searchResultsPage = pageFactoryManager.getSearchResultsPage();
+        searchResultsPage.clickButtonAdvancedSearch();
+    }
+
+    @When("User click on inputs Enter keywords or {string}")
+    public void userClickOnInputsEnterKeywordsOrItemNumber(final String Item) {
+        searchResultsPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        searchResultsPage.enterInputItemNumber(Item);
+
+    }
+
+    @And("User click on input {string} words from your search")
+    public void userClickOnInputExcludeWordsFromYourSearch(final String Exclude) {
+        searchResultsPage.enterInputItemExclude(Exclude);
+    }
+
+    @Then("User checks selected Search")
+    public void userChecksSelectedSearch() {
+        searchResultsPage.clickButtonSearch();
+    }
+
+    @And("User checks {string} search")
+    public void userChecksQuantitySearch(final String expectedAmount) {
+        searchResultsPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        assertEquals(searchResultsPage.getCountSearch(), expectedAmount);
+    }
+
+
+    @When("User clicks 'Sign In' button")
+    public void clickSignInButton() {
+        homePage.clickSignInButton();
+    }
+
+
+    @When("User makes fields by keyword {string}")
+    public void userMakesFieldsByKeywordUsername(final String username) {
+        singInPage = pageFactoryManager.getSignInPage();
+        singInPage.enterTextUsername(username);
+    }
+
+    @And("User clicks Continue button")
+    public void userClicksContinueButton() {
+        singInPage.clickButtonContinue();
+    }
+
+    @And("User makes fields {string} by keyword")
+    public void userMakesFieldsPasswordByKeyword(final String password) {
+        singInPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        singInPage.enterTextPassword(password);
+    }
+
+    @And("User clicks Sign in button")
+    public void userClicksSignInButton() {
+        singInPage.clickButtonSignInUser();
+    }
+
+    @Then("User checks that Hi Stacey!")
+    public void userChecksThatHiStacey() {
+        singInPage.waitForPageLoadComplete(DEFAULT_TIMEOUT);
+        assertTrue(singInPage.isControlsUsernameHiVisible());
+
     }
 }

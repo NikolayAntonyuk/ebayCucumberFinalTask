@@ -23,6 +23,9 @@ public class SignInPage extends BasePage{
     @FindBy(xpath = "//input[@id='pass']")
     private WebElement inputPassword;
 
+    @FindBy(xpath = "//button[@id='sgnBt']")
+    private WebElement buttonSignInUser;
+
     @FindBy(xpath = "//button[@id='signin_fb_btn']")
     private WebElement buttonFacebook;
 
@@ -35,7 +38,24 @@ public class SignInPage extends BasePage{
     @FindBy(xpath = "//input[@class='checkbox__control']")
     private WebElement inputCheckbox;
 
+    @FindBy(xpath = "//button[@id='gh-ug' and text()='Hi ']")
+    private WebElement controlsUsernameHi;
 
+
+
+    public void clickButtonContinue() {
+        buttonContinue.click();
+    }
+
+    public void clickButtonSignInUser() {
+        buttonSignInUser.click();
+    }
+
+
+
+    public boolean isControlsUsernameHiVisible() {
+        return controlsUsernameHi.isDisplayed();
+    }
 
     public boolean isUsernameVisible() {
         return inputUsername.isDisplayed();

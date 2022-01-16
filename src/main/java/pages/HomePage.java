@@ -72,6 +72,28 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//a[@data-test-id='start-shopping']")
     private WebElement startShopping;
 
+    @FindBy(xpath = "//button[@aria-label='More refinements']")
+    private WebElement moreRefinements;
+
+    @FindBy(xpath = "//a[@class='thrd' and contains(text(), ' Blogs')]")
+    private WebElement buttonBlogs;
+
+    @FindBy(xpath = "//a[@class='thrd gf-i' and contains(text(), 'Facebook')]")
+    private WebElement buttonFacebook;
+
+    @FindBy(xpath = "//h1[@class='gmql0nx0 l94mrbxd p1ri9a11 lzcic4wl']")
+    private WebElement iconFacebook;
+
+    @FindBy(xpath = "//a[@class='thrd gf-i' and contains(text(), 'Twitter')]")
+    private WebElement buttonTwitter;
+
+    @FindBy(xpath = "//header/div[@class='css-1dbjc4n r-o96wvk']")
+    private WebElement iconTwitter;
+
+
+
+
+
 
 
 
@@ -141,6 +163,27 @@ public class HomePage extends BasePage {
         startShopping.click();
     }
 
+    public void clickMoreRefinements() {
+        moreRefinements.click();
+    }
+
+    public void clickButtonBlogs() {
+        buttonBlogs.click();
+    }
+
+    public void clickButtonFacebook() {
+        buttonFacebook.click();
+    }
+
+    public void clickButtonTwitter() {
+        buttonTwitter.click();
+    }
+
+
+
+
+
+
 
 
 
@@ -168,6 +211,11 @@ public class HomePage extends BasePage {
 
 
 
+
+
+
+
+
     public WebElement getLanguagePopUpSet() {
         return languagePopUpSet;
     }
@@ -186,22 +234,23 @@ public class HomePage extends BasePage {
         searchInputField.sendKeys(searchText);
     }
 
-    public WebElement getWishListProductsCount() {
-        return wishListProductsCount;
+    public WebElement getIconFacebook() {
+        return iconFacebook;
+    }
+
+    public WebElement getIconTwitter() {
+        return iconTwitter;
     }
 
     public WebElement getButtonStartShopping() {
         return startShopping;
     }
 
-    public String getAmountOfProductsInWishList() {
-        return wishListProductsCount.getText();
-    }
-
 
     public WebElement getShoppingCartCount() {
         return shoppingCart;
     }
+
 
     public String getAmountOfShoppingCart() {
         return shoppingCart.getText();

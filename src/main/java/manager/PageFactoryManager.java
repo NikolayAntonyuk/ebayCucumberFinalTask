@@ -39,8 +39,8 @@ public class PageFactoryManager {
         return new SignUpPage(driver);
     }
 
-    public ReviewPage getReviewPage(){
-        return new ReviewPage(driver);
+    public FiltersPage getFiltersPage(){
+        return new FiltersPage(driver);
     }
 
 
